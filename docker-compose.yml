@@ -1,10 +1,10 @@
 version: '3.9'
 
 services:
-  web:
+  backend:
     build:
-      context: ./web
-    container_name: web-container
+      context: ./backend
+    container_name: backend-container
     volumes:
       - ../src:/var/www/html
     ports:
@@ -15,21 +15,21 @@ services:
       - MYSQL_USER=laravel
       - MYSQL_PASSWORD=laravel
     depends_on:
-      - mysql
+      - db
 
-  node:
+  frontend:
     build:
-      context: ./node
-    container_name: node-container
+      context: ./frontend
+    container_name: frontend-container
     working_dir: /var/www/html
     ports:
       - "5173:5173"
     volumes:
       - ../src:/var/www/html
 
-  mysql:
+  db:
     image: mysql:latest
-    container_name: mysql-container
+    container_name: db-container
     ports:
       - "3306:3306"
     environment:
